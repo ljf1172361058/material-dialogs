@@ -101,7 +101,7 @@ You can create basic, list, single/multi choice, progress, input, etc. dialogs w
 ```gradle
 dependencies {
 	// ... other dependencies here
-    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
+    compile 'com.afollestad.material-dialogs:core:0.9.2.3'
 }
 ```
 
@@ -113,7 +113,7 @@ The *commons* module contains extensions to the library that not everyone may ne
 ```gradle
 dependencies {
     // ... other dependencies here
-    compile 'com.afollestad.material-dialogs:commons:0.9.1.0'
+    compile 'com.afollestad.material-dialogs:commons:0.9.2.3'
 }
 ```
 
@@ -385,13 +385,18 @@ the single choice callback when user presses the positive action button. The dia
 unless auto dismiss is turned off.
 
 If you make a call to `alwaysCallSingleChoiceCallback()`, the single choice callback will be called
-every time the user selects an item.
+every time the user selects/unselects an item.
 
 ## Coloring Radio Buttons
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's radio buttons. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
- and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory.
+ `widgetColorAttr()`, and `choiceWidgetColor()` method. Their names and parameter annotations make them self explanatory.
+
+`widgetColor` is the same color that affects other UI elements. `choiceWidgetColor` is specific to
+single and multiple choice dialogs, it only affects radio buttons and checkboxes. You provide a
+`ColorStateList` rather than a single color which is used to generate a `ColorStateList`.
+
  Note that by default, radio buttons will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
@@ -414,7 +419,8 @@ new MaterialDialog.Builder(this)
             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                 /**
                  * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
-                 * returning false here won't allow the newly selected check box to actually be selected.
+                 * returning false here won't allow the newly selected check box to actually be selected
+                 * (or the newly unselected check box to be unchecked).
                  * See the limited multi choice dialog example in the sample project for details.
                  **/
                  return true;
@@ -433,14 +439,19 @@ the multi choice callback when user presses the positive action button. The dial
 unless auto dismiss is turned off.
 
 If you make a call to `alwaysCallMultiChoiceCallback()`, the multi choice callback will be called
-every time the user selects an item.
+every time the user selects/unselects an item.
 
 ## Coloring Check Boxes
 
 Like action buttons and many other elements of the Material dialog, you can customize the color of a 
  dialog's check boxes. The `Builder` class contains a `widgetColor()`, `widgetColorRes()`,
- and `widgetColorAttr()` method. Their names and parameter annotations make them self explanatory. 
- Note that by default, check boxes will be colored with the color held in `colorAccent` (for AppCompat)
+ `widgetColorAttr()`, and `choiceWidgetColor()` method. Their names and parameter annotations make them self explanatory.
+
+`widgetColor` is the same color that affects other UI elements. `choiceWidgetColor` is specific to
+single and multiple choice dialogs, it only affects radio buttons and checkboxes. You provide a
+`ColorStateList` rather than a single color which is used to generate a `ColorStateList`.
+
+ Note that by default, radio buttons will be colored with the color held in `colorAccent` (for AppCompat)
  or `android:colorAccent` (for the Material theme) in your Activity's theme.
  
 There's also a global theming attribute as shown in the Global Theming section of this README: `md_widget_color`.
